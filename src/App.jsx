@@ -4,7 +4,7 @@ import Home from './components/Home'
 
 const App = () => {
   return (
-    <div className='w-screen h-screen'>
+    <div className='bg-[#1F1E24] w-full h-full flex'>
 
       <Routes>
         <Route path='/' element={<Home/>}/>
