@@ -6,15 +6,22 @@ const Topnav = () => {
   const [query, setquery] = useState("");
   const [searches, setsearches] = useState([]);
 
-  const GetSearchs = async () => {
-    try {
-      const { data } = await axios.get(`/search/multi?query=${query}`);
-      setsearches(data.results);
-      console.log(data);
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
+ 
+const GetSearchs = async () => {
+  if (!query) {
+    console.log('Query is empty or undefined!');
+    return; // Return early if query is not set
+  }
+
+  try {
+    const { data } = await axios.get(`https://api.themoviedb.org/3/search/multi?query=${query}`);
+    setsearches(data.results);
+    console.log(data);
+  } catch (error) {
+    console.log("Error:", error.message);
+  }
+};
+  
 
   useEffect(() => {
     GetSearchs();
@@ -44,7 +51,7 @@ const Topnav = () => {
               key={i}
               className="hover:text-black hover:bg-zinc-400 duration-300 font-semibold text-zinc-500  w-[100%] p-5 flex justify-start items-center border-b-2 border-zinc-100"
             >
-              <img src="" alt="" />
+              <img src={`https://image.tmdb.org/t/p/original/${s.backdrop_path}`} alt="" />
               <span>
                 {s.name || s.title || s.orignal_name || s.orignal_title}
               </span>
